@@ -1,0 +1,33 @@
+<!--- Enhancing Magic Skill-Up Segment --->
+                    <elseif spell="Barfire" >
+                            <!--- Check if /Heal Break is active --->
+                            <if advanced='"$SkillUp" == "1"'>
+                                    <!--- Fix the SkillCycle varaible in case the SMN SKILL Segment boinked it --->
+                                    <if advanced='"$SkillCycle" == "6|7|8|9"'>
+                                            <action type="var" cmd="set SkillCycle 1" />
+                                            <action type="command" when="aftercast">wait 4;input /ma "Barfire"</action>;input wait 4;input /ma "Refresh II"
+                                            <action type="cancelspell"/>
+                                    </if>
+                                    <!--- Check if your MP is low --->
+                                    <if Mode="OR" NOTMPGT="100" MP="100">
+                                            <if notspell="blink">
+                                                    <action type="command" when="precast">input /heal on;wait $RestTime4Protect;input /heal off;wait 2;input /ma "Barfire"</action>
+                                                    <action type="cancelspell"/>
+                                            </if>
+                                            <else>
+                                                    <action type="command" when="aftercast">input /heal on;wait $RestTime4Protect;input /heal off;wait 2;input /ma "Barfire"</action>
+                                            </else>
+                                    </if>
+                                    <if NotBuffActive="Food">
+                                        <cancelspell />
+                                        <command>input /item "Seafood Pitaru" <me>;wait 5;input /ma "Barfire"</command>
+                                        <return />
+                                    </if>
+                                    <if NotBuffActive="Refresh">
+                                        <changespell Spell="Refresh" />
+                                        <changetarget target="<me>" />
+                                        <command when="Aftercast">wait 6;input /ma "Barfire"</command>
+                                        <return />
+                                        </if>
+                                  
+                                    <!--- Enhancing Skill Cycling --->
